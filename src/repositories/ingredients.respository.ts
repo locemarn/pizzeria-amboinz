@@ -1,15 +1,38 @@
+import { Prisma, PrismaClient } from '@prisma/client'
 import { IngredientsInterface } from '../interface/ingredients.interface'
 import { Ingredients } from '../models'
 
 export class IngredientsRepository implements IngredientsInterface {
-  create(data: Ingredients): Promise<Ingredients> {
-    console.log('data', data)
+  _prisma: PrismaClient
 
-    throw new Error('Method not implemented.')
+  constructor() {
+    this._prisma = new PrismaClient()
+  }
+
+  async create(data: Ingredients): Promise<Ingredients> {
+    try {
+      return await this._prisma.ingredients.create({ data })
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === 'P2002') {
+          console.error(e.message)
+        }
+      }
+      throw e
+    }
   }
   delete(id: number): Promise<Ingredients> {
-    console.log('id', id)
-
-    throw new Error('Method not implemented.')
+    try {
+      return this._prisma.ingredients.delete({
+        where: { id },
+      })
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === 'P2002') {
+          console.error(e.message)
+        }
+      }
+      throw e
+    }
   }
 }

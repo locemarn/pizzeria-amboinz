@@ -1,11 +1,10 @@
 import { IngredientsInterface } from '../interface/ingredients.interface'
 import { Ingredients } from '../models'
-import { IngredientsRepository } from '../repositories/ingredients.respository'
 
 export class IngredientsService {
   private _repository: IngredientsInterface
 
-  constructor(repository: IngredientsRepository) {
+  constructor(repository: IngredientsInterface) {
     this._repository = repository
   }
 

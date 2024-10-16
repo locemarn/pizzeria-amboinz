@@ -1,2 +1,18 @@
 GET http://localhost:8000/
 content-type: application/json
+
+###
+POST http://localhost:8000/ingredients
+content-type: application/json
+
+{
+  "ingredient": "tomatoesssss"
+}
+
+###
+DELETE  http://localhost:8000/ingredients
+content-type: application/json
+
+{
+  "id": 14
+}
