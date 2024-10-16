@@ -1,6 +1,6 @@
 import { Ingredients } from '../models'
 
-export interface Ingredientsnterface {
+export interface IngredientsInterface {
   create(data: Ingredients): Promise<Ingredients>
   delete(id: number): Promise<Ingredients>
 }
