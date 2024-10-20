@@ -21,7 +21,7 @@ model Ingredients {
 
 model Pizzas {
   id           Int         @id @default(autoincrement())
-  name         String      @unique
+  name         String
   price        Float
   ingredientId Int
   ingredient   Ingredients @relation(fields: [ingredientId], references: [id])
