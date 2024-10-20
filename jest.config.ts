@@ -13,6 +13,8 @@ const config = {
   coveragePathIgnorePatterns: ['/node_modules/'],
   coverageProvider: 'v8',
   moduleDirectories: ['node_modules', 'src'],
+  testEnvironment: 'node',
+  setupFilesAfterEnv: ['<rootDir>/src/libs/prisma/mocks/singleton.ts'],
 }
 
 module.exports = config

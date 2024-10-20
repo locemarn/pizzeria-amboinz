@@ -1,16 +1,19 @@
 import { Prisma, PrismaClient } from '@prisma/client'
 import { IngredientsInterface } from '../interface/ingredients.interface'
 import { Ingredients } from '../models'
+import prisma from '../libs/prisma/mocks/client'
 
 export class IngredientsRepository implements IngredientsInterface {
   _prisma: PrismaClient
 
   constructor() {
-    this._prisma = new PrismaClient()
+    this._prisma = prisma
   }
 
   async create(data: Ingredients): Promise<Ingredients> {
     try {
+      if (!data || !data.ingredient || data.ingredient === '')
+        throw new Error('Ingredient value must be provide.')
       return await this._prisma.ingredients.create({ data })
     } catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
@@ -21,15 +24,21 @@ export class IngredientsRepository implements IngredientsInterface {
       throw e
     }
   }
-  delete(id: number): Promise<Ingredients> {
+
+  async delete(id: number): Promise<Ingredients> {
     try {
-      return this._prisma.ingredients.delete({
+      if (!id) throw new Error('id must be provide.')
+      return await this._prisma.ingredients.delete({
         where: { id },
+        select: {
+          id: true,
+          ingredient: true,
+        },
       })
     } catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         if (e.code === 'P2002') {
-          console.error(e.message)
+          console.error('error message', e.message)
         }
       }
       throw e

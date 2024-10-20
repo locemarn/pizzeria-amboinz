@@ -1,22 +1,29 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IngredientsInterface } from '../../interface/ingredients.interface'
-import { MockIngredientsRepository } from '../../repositories/mocks/mockIngredients.repository'
+import { prismaMock } from '../../libs/prisma/mocks/singleton'
+import { IngredientsRepository } from '../../repositories/ingredients.respository'
 import { IngredientsService } from '../ingredients.service'
 
 describe('Ingredients Service', () => {
   let repository: IngredientsInterface
+  const responseValue = {
+    id: 1,
+    ingredient: 'new ingredient',
+  }
 
   beforeEach(() => {
-    repository = new MockIngredientsRepository()
+    repository = new IngredientsRepository()
   })
 
   afterEach(() => {
-    repository = {} as MockIngredientsRepository
+    repository = {} as IngredientsRepository
   })
 
   describe('Create Ingredient', () => {
     test('should create a new ingredient', async () => {
+      prismaMock.ingredients.create.mockResolvedValue(responseValue)
       const requestBody = {
-        ingredient: 'ingredient',
+        ingredient: 'new ingredient',
       }
       const service = new IngredientsService(repository)
       const sut = await service.createIngredient(requestBody)
@@ -31,7 +38,7 @@ describe('Ingredients Service', () => {
 
     test('should throw error with unable to create ingredient.', async () => {
       const requestBody = {
-        ingredient: 'ingredient',
+        ingredient: 'new ingredient',
       }
       const service = new IngredientsService(repository)
       jest
@@ -48,15 +55,19 @@ describe('Ingredients Service', () => {
 
   describe('Delete Ingredient', () => {
     test('should delete an ingredient', async () => {
-      const mockId = 1
+      prismaMock.ingredients.delete.mockResolvedValue(responseValue)
+      const id = 1
       const service = new IngredientsService(repository)
-      const sut = await service.deleteIngredient(mockId)
+      const sut = await service.deleteIngredient(id)
+      console.log('sut ===>', sut)
 
       expect(sut.id).not.toBeNull()
       expect(sut).toMatchObject({
         id: expect.any(Number),
         ingredient: expect.any(String),
       })
+      expect(sut.id).toEqual(id)
+      expect(sut.ingredient).toBe(responseValue.ingredient)
     })
   })
 })
