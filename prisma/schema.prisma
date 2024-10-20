@@ -30,6 +30,7 @@ model Pizzas {
 
 model Orders {
   id        Int      @id @default(autoincrement())
+  qtd       Int
   pizzasId  Int
   order     Pizzas   @relation(fields: [pizzasId], references: [id])
   createdAt DateTime @default(now())

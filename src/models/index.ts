@@ -17,6 +17,7 @@ export class Pizzas {
 export class Orders {
   constructor(
     public readonly order: number[],
+    public readonly qtd: number,
     public readonly id?: number,
     public readonly createdAt?: Date,
     public readonly updatedAt?: Date
