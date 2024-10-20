@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IngredientsInterface } from '../../interface/ingredients.interface'
 import { prismaMock } from '../../libs/prisma/mocks/singleton'
 import { IngredientsRepository } from '../../repositories/ingredients.respository'
@@ -59,7 +58,6 @@ describe('Ingredients Service', () => {
       const id = 1
       const service = new IngredientsService(repository)
       const sut = await service.deleteIngredient(id)
-      console.log('sut ===>', sut)
 
       expect(sut.id).not.toBeNull()
       expect(sut).toMatchObject({
