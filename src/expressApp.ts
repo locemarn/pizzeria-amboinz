@@ -1,5 +1,6 @@
 import express from 'express'
 import ingredientRoutes from './api/routes/ingredients.routes'
+import pizzasRoutes from './api/routes/pizzas.routes'
 
 const app = express()
 
@@ -10,5 +11,6 @@ app.get('/', (req, res) => {
 })
 
 app.use('/ingredients', ingredientRoutes)
+app.use('/pizzas', pizzasRoutes)
 
 export default app

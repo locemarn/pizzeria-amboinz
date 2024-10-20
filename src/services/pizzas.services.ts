@@ -8,14 +8,14 @@ export class PizzasService {
     this._repository = repository
   }
 
-  async createPizza(input: Pizzas) {
-    const result = this._repository.create(input)
+  async createPizza(input: Pizzas[]) {
+    const result = await this._repository.create(input)
     if (!result) throw new Error('unable to create a pizza.')
     return result
   }
 
-  async deletePizza(id: number) {
-    const result = await this._repository.delete(id)
+  async deletePizza(name: string) {
+    const result = await this._repository.delete(name)
     if (!result) throw new Error('unable to delete a pizza.')
     return result
   }
